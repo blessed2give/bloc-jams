@@ -30,6 +30,20 @@ var albumPicasso = {
      ]
  };
 
+var albumThriller = {
+    title: 'Thriller',
+    artist: 'Michael Jackson',
+    label: 'Epic',
+    year: '1982',
+    albumArtUrl: 'assets/images/album_covers/MJThriller.png',
+    songs: [
+        {title: 'Wanna Be Starting Something', duration: '6:04'},
+        {title: 'Baby Be Mine', duration: '4:21'},
+        {title: 'The Girl Is Mine', duration: '3:43'},
+        {title: 'Thriller', duration: '5:58'}
+    ]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
     var template =
         '<tr class="album-view-song-item">'
@@ -42,15 +56,13 @@ var createSongRow = function(songNumber, songName, songLength) {
      return template;
  };
 
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
 var setCurrentAlbum = function(album) {
-     // #1
-    var albumTitle = document.getElementsByClassName('album-view-title')[0];
-    var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-    var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-    var albumImage = document.getElementsByClassName('album-cover-art')[0];
-    var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
- 
-     // #2
     albumTitle.firstChild.nodeValue = album.title;
     albumArtist.firstChild.nodeValue = album.artist;
     albumReleaseInfo.firstChild.nodeValue = album.year + ' ' +  album.label;
@@ -66,5 +78,17 @@ var setCurrentAlbum = function(album) {
 };
  
  window.onload = function() {
-     setCurrentAlbum(albumPicasso);
+     setCurrentAlbum(albumThriller);
+     
+     var albums = [albumThriller, albumMarconi, albumPicasso];
+     var i = 0;
+     
+     albumImage.addEventListener('click', function(event) {
+         setCurrentAlbum(albums[i]);
+         i++;
+         
+         if (i == albums.length) {
+             i = 0;
+         }
+     });
  };
